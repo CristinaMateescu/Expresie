@@ -1,0 +1,104 @@
+Mateescu Cristina - Ramona, 311 CB, tema3
+
+	1. Explicare strcturi din "info.h"
+		
+		structura "informatie" 
+			-folosita in arbore
+			-"string" reprezinta un operato
+			r, numar, sau variabila
+			-"type" este un identificator, primeste 0 pentru operator, 1 pentru variabila/numar
+		
+		structura "variabila"
+			-folosita in lista de variabile
+			-are 2 campuri, un sir "name" - numele, un int "value" - valoarea numerica
+
+		
+	2. Explicare functii de ALOCARE
+		
+		TVar AlocVar (char *name, int value)
+		
+			SCOP: Alocarea campului info - lista de variabile
+			
+			Se aloca pe rand variabila si campul corespunzator numelui 
+			Se verifica reusita alocarilor
+			Se initializeaza cele 2 campuri cu valorile primite ca argument
+
+		TLista AlocCel ( void* info )
+		
+			SCOP: Alocare o celula din lista de variabile
+			
+			Se aloca celula, se initializeaza cele doua campuri
+
+		Tinfo AlocInfo (char * string,int type )
+			
+			SCOP: Alocarea campului info - arbore
+		
+			Se aloca pe rand, info si campul "string"
+			Se verifica alocarile
+			Se initializeaz campurile cu valorile date ca argumente
+
+		TArb AlocArb ( Tinfo info)
+			
+			SCOP: Alocarea unui nod din arbore
+		
+			Se aloca nodul, se initializeaza cele 3 campuri
+
+	
+	3. Explicarea celor 2 functii de baza
+		
+		void citire_arb ( FILE * in, TArb *arbore)
+			
+			-citeste pe rand toate valorile din arbore si construieste arborele
+			-este o functie recursiva
+			-Pentru nodul curent, citeste valoarea din nod
+			-Se initializeaza campul "type" prin verificarea operator/variabila
+			-Se aloca memorie pentru nod, info
+			-Se adauga nodul in arbore
+			-Daca este vorba de un operator, in functie de operator se apeleaza citirea pentru stanga si/sau dreapta
+
+		int eval ( FILE *out, TArb arbore, int *err ,TLista variables) 
+			
+			- Functia evalueaza arborele si returneaza expresia
+			- Este o functie recursiva
+			- err este o variabila care are valoarea 1 daca nu exista nicio eroare
+			- Exista cele 3 cazuri, care se trateaza separat :
+				Daca in nodul curent este un numar:
+					se transforma stringul in int
+				Daca in nodul curent este o variabila
+					se cauta in lista de variabile
+					daca nu exista, se returneaza codul de eroare
+					daca exista se returneaza valoarea ei numerica
+				Daca in nodul curent este un operator
+					in functie de operator, se verifica impartirea la 0 si radicalul din numere negative cu returnarea erorii
+					Se returneaza o expresie de forma stanga "operator" dreapta
+	
+		
+	
+	4. Cele 2 functii de eliberare 
+		-Eliberarea listei de variabile 
+			*atentie la avans
+			*eliberearea tuturor campurilor
+		-Eliberarea arborelui
+			*se face recursiv 
+			se elibereaza stanga, dreapta, apoi nodul curent
+	
+	5. main()
+	
+		-se deschid fisierele
+		-se citeste numarul de variabile
+		-se construieste lista de variabile folosind cele 2 functii de alocare 
+		-se citeste numarul de expresii
+		-pentru fiecare expresie in parte
+			se citeste arborele folosind functia de citire
+			se evalueaza expresia folosind functia de evaluare
+			rezultatul se scrie in fisier
+			se elibereaza arborele folosind functia de eliberare
+		- se elibereaza lista de variabile folosind functia de eliberare
+		- se inchid fisierele
+
+
+
+
+					
+
+
